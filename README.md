@@ -1,6 +1,6 @@
 # The Phoenix Project - Burmese Translation & Reader
 
-[![Deploy to GitHub Pages](https://github.com/winyannainghtut/phoenix-project/actions/workflows/deploy.yml/badge.svg)](https://github.com/winyannainghtut/phoenix-project/actions/workflows/deploy.yml)
+[![Deploy to GitHub Pages](https://github.com/winyannainghtut/phoenix-project/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/winyannainghtut/phoenix-project/actions/workflows/deploy.yml)
 
 တစ်နှစ်ကို ဒေါ်လာ ၄ ဘီလီယံဖိုးလောက် ထုတ်လုပ်ရောင်းချနေတဲ့ **Parts Unlimited** ကုမ္ပဏီရဲ့ IT ဌာနမှာ ကြုံတွေ့ရတဲ့ စိန်ခေါ်မှုတွေ၊ DevOps ရဲ့ အနှစ်သာရတွေနဲ့ စီးပွားရေးလောကရဲ့ အလှည့်အပြောင်းတွေကို ရင်ခုန်စိတ်လှုပ်ရှားဖွယ် ဖတ်ရှုရမယ့် **"The Phoenix Project"** စာအုပ်၏ မြန်မာဘာသာပြန် စုစည်းမှု ဖြစ်ပါသည်။
 
