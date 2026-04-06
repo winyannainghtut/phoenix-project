@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Phoenix Project - Burmese Translation</title>
+  <meta name="description" content="A Burmese translation of The Phoenix Project: A Novel about IT, DevOps, and Helping Your Business Win.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="glass-header">
+      <button id="menu-toggle" aria-label="Toggle Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <h1 id="top-title">The Phoenix Project</h1>
+      <div class="header-actions">
+        <!-- Future: Dark mode toggle could go here -->
+      </div>
+    </header>
+
+    <nav id="sidebar" class="glass-sidebar">
+      <div class="sidebar-header">
+        <h2>မာတိကာ</h2>
+        <button id="close-menu" aria-label="Close Menu">&times;</button>
+      </div>
+      <ul id="chapter-list"></ul>
+    </nav>
+
+    <main id="reader-container">
+      <article id="content-area" class="prose">
+        <div id="loading" class="vibrant-loader">အကြောင်းအရာများကို ဖတ်ရှုနေပါသည်...</div>
+      </article>
+      
+      <div class="nav-controls">
+        <button id="prev-chapter" class="btn btn-secondary">ယခင်</button>
+        <button id="next-chapter" class="btn btn-primary">နောက်တစ်ခု</button>
+      </div>
+    </main>
+
+    <div id="overlay"></div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

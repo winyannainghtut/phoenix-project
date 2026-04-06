@@ -1,0 +1,21 @@
+{
+  "name": "book-reader",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "marked": "^17.0.6",
+    "vite": "^8.0.4"
+  },
+  "devDependencies": {
+    "vite-plugin-static-copy": "^4.0.1"
+  }
+}
