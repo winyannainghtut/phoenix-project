@@ -7,43 +7,120 @@
   <meta name="description" content="A Burmese translation of The Phoenix Project: A Novel about IT, DevOps, and Helping Your Business Win.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+Myanmar:wght@400;500;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div id="app">
     <header class="glass-header">
-      <button id="menu-toggle" aria-label="Toggle Menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-      <h1 id="top-title">The Phoenix Project</h1>
-      <div class="header-actions">
-        <!-- Future: Dark mode toggle could go here -->
+      <div class="header-leading">
+        <button id="menu-toggle" aria-label="Open table of contents" aria-controls="sidebar" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div class="title-lockup">
+          <p class="top-eyebrow">Phoenix Project Reader</p>
+          <h1 id="top-title">The Phoenix Project</h1>
+        </div>
       </div>
+      <p id="top-meta" class="top-meta">Loading chapter...</p>
     </header>
 
-    <nav id="sidebar" class="glass-sidebar">
-      <div class="sidebar-header">
-        <h2>မာတိကာ</h2>
-        <button id="close-menu" aria-label="Close Menu">&times;</button>
-      </div>
-      <ul id="chapter-list"></ul>
-    </nav>
+    <div class="reader-layout">
+      <nav id="sidebar" class="glass-sidebar" aria-label="Table of contents">
+        <div class="sidebar-header">
+          <div>
+            <p class="sidebar-kicker">Table of contents</p>
+            <h2>Navigate the book</h2>
+          </div>
+          <button id="close-menu" aria-label="Close table of contents">&times;</button>
+        </div>
 
-    <main id="reader-container">
-      <article id="content-area" class="prose">
-        <div id="loading" class="vibrant-loader">အကြောင်းအရာများကို ဖတ်ရှုနေပါသည်...</div>
-      </article>
-      
-      <div class="nav-controls">
-        <button id="prev-chapter" class="btn btn-secondary">ယခင်</button>
-        <button id="next-chapter" class="btn btn-primary">နောက်တစ်ခု</button>
-      </div>
-    </main>
+        <div class="sidebar-body">
+          <section id="resume-card" class="sidebar-card" hidden>
+            <p class="sidebar-card__label">Continue reading</p>
+            <button id="resume-button" class="resume-button" type="button">
+              <span id="resume-title" class="resume-title"></span>
+              <span id="resume-meta" class="resume-meta"></span>
+            </button>
+          </section>
+
+          <section class="sidebar-card">
+            <div class="sidebar-card__header">
+              <p class="sidebar-card__label">Reader settings</p>
+              <p class="sidebar-card__hint">Saved on this device</p>
+            </div>
+
+            <div class="setting-row">
+              <span>Theme</span>
+              <div class="segmented-control" data-setting="theme">
+                <button type="button" data-value="night">Night</button>
+                <button type="button" data-value="paper">Paper</button>
+              </div>
+            </div>
+
+            <div class="setting-row">
+              <span>Text size</span>
+              <div class="segmented-control" data-setting="fontSize">
+                <button type="button" data-value="compact">Compact</button>
+                <button type="button" data-value="comfortable">Comfortable</button>
+                <button type="button" data-value="large">Large</button>
+              </div>
+            </div>
+
+            <div class="setting-row">
+              <span>Line width</span>
+              <div class="segmented-control" data-setting="lineWidth">
+                <button type="button" data-value="focused">Focused</button>
+                <button type="button" data-value="wide">Wide</button>
+              </div>
+            </div>
+          </section>
+
+          <div id="toc-sections" class="toc-sections"></div>
+        </div>
+      </nav>
+
+      <main id="reader-container">
+        <section class="reader-hero">
+          <div class="reader-hero__copy">
+            <p id="chapter-kicker" class="chapter-kicker">Loading book structure...</p>
+            <h2 id="chapter-heading" class="chapter-heading">Preparing your reading view</h2>
+            <p id="chapter-description" class="chapter-description">Your place is saved automatically on this device.</p>
+          </div>
+
+          <div class="reader-hero__stats">
+            <p id="book-progress-label" class="hero-stat">Book progress: 0%</p>
+            <p id="chapter-progress-label" class="hero-stat hero-stat--muted">Chapter progress: 0%</p>
+          </div>
+        </section>
+
+        <section class="progress-panel" aria-label="Reading progress">
+          <div class="progress-track">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+        </section>
+
+        <article id="content-area" class="prose">
+          <div id="loading" class="vibrant-loader">Loading chapter...</div>
+        </article>
+
+        <div class="nav-controls">
+          <button id="prev-chapter" class="btn btn-secondary nav-button" type="button">
+            <span class="nav-direction">Previous</span>
+            <span id="prev-label" class="nav-label">Start of book</span>
+          </button>
+
+          <button id="next-chapter" class="btn btn-primary nav-button" type="button">
+            <span class="nav-direction">Next</span>
+            <span id="next-label" class="nav-label">Loading...</span>
+          </button>
+        </div>
+      </main>
+    </div>
 
     <div id="overlay"></div>
   </div>
