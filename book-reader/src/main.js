@@ -13,6 +13,7 @@ const DEFAULT_PREFERENCES = {
   theme: 'night',
   fontSize: 'comfortable',
   lineWidth: 'focused',
+  desktopSidebarHidden: false,
 };
 const PARTS = [
   { id: 'part-1', label: 'Part 1', start: 1, end: 16 },
@@ -44,6 +45,7 @@ const tocSections = document.getElementById('toc-sections');
 const contentArea = document.getElementById('content-area');
 const readerContainer = document.getElementById('reader-container');
 const menuToggle = document.getElementById('menu-toggle');
+const menuToggleLabel = document.getElementById('menu-toggle-label');
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('overlay');
 const closeBtn = document.getElementById('close-menu');
@@ -92,8 +94,24 @@ async function init() {
 }
 
 function attachEventListeners() {
-  menuToggle.addEventListener('click', () => toggleMenu(true));
-  closeBtn.addEventListener('click', () => toggleMenu(false));
+  menuToggle.addEventListener('click', () => {
+    if (desktopQuery.matches) {
+      setDesktopSidebarHidden(!readerPreferences.desktopSidebarHidden);
+      return;
+    }
+
+    toggleMenu(true);
+  });
+
+  closeBtn.addEventListener('click', () => {
+    if (desktopQuery.matches) {
+      setDesktopSidebarHidden(true);
+      return;
+    }
+
+    toggleMenu(false);
+  });
+
   overlay.addEventListener('click', () => toggleMenu(false));
 
   window.addEventListener('hashchange', () => {
@@ -173,7 +191,10 @@ function attachEventListeners() {
   });
 
   window.addEventListener('beforeunload', () => saveCurrentPosition(true));
-  desktopQuery.addEventListener('change', () => toggleMenu(false));
+  desktopQuery.addEventListener('change', () => {
+    toggleMenu(false);
+    applyPreferences();
+  });
 }
 
 function normalizeChapters(rawChapters) {
@@ -556,14 +577,25 @@ function toggleMenu(show) {
   const shouldShow = show && !desktopQuery.matches;
   sidebar.classList.toggle('active', shouldShow);
   overlay.classList.toggle('active', shouldShow);
-  menuToggle.setAttribute('aria-expanded', String(shouldShow));
   document.body.classList.toggle('menu-open', shouldShow);
+  updateMenuToggleState();
+}
+
+function setDesktopSidebarHidden(hidden) {
+  readerPreferences = {
+    ...readerPreferences,
+    desktopSidebarHidden: hidden,
+  };
+
+  applyPreferences();
+  persistPreferences();
 }
 
 function applyPreferences() {
   document.body.dataset.theme = readerPreferences.theme;
   document.body.dataset.fontSize = readerPreferences.fontSize;
   document.body.dataset.lineWidth = readerPreferences.lineWidth;
+  document.body.classList.toggle('desktop-nav-hidden', desktopQuery.matches && readerPreferences.desktopSidebarHidden);
 
   segmentedControls.forEach((control) => {
     const setting = control.dataset.setting;
@@ -573,6 +605,27 @@ function applyPreferences() {
       button.classList.toggle('is-active', button.dataset.value === currentValue);
     });
   });
+
+  updateMenuToggleState();
+}
+
+function updateMenuToggleState() {
+  const isDesktop = desktopQuery.matches;
+  const mobileMenuOpen = sidebar.classList.contains('active');
+  const desktopSidebarVisible = !readerPreferences.desktopSidebarHidden;
+
+  if (isDesktop) {
+    menuToggle.setAttribute('aria-label', desktopSidebarVisible ? 'Hide table of contents' : 'Show table of contents');
+    menuToggle.setAttribute('aria-expanded', String(desktopSidebarVisible));
+    menuToggleLabel.textContent = desktopSidebarVisible ? 'Hide Menu' : 'Show Menu';
+    closeBtn.setAttribute('aria-label', 'Hide table of contents');
+    return;
+  }
+
+  menuToggle.setAttribute('aria-label', 'Open table of contents');
+  menuToggle.setAttribute('aria-expanded', String(mobileMenuOpen));
+  menuToggleLabel.textContent = 'Navigate';
+  closeBtn.setAttribute('aria-label', 'Close table of contents');
 }
 
 function renderLoadingState() {
@@ -613,6 +666,7 @@ function loadReaderPreferences() {
     theme: sanitizePreference(saved.theme, ['night', 'paper'], DEFAULT_PREFERENCES.theme),
     fontSize: sanitizePreference(saved.fontSize, ['compact', 'comfortable', 'large'], DEFAULT_PREFERENCES.fontSize),
     lineWidth: sanitizePreference(saved.lineWidth, ['focused', 'wide'], DEFAULT_PREFERENCES.lineWidth),
+    desktopSidebarHidden: saved.desktopSidebarHidden === true,
   };
 }
 

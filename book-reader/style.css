@@ -156,6 +156,12 @@ h3 {
   transform: translateY(-1px);
 }
 
+.menu-toggle__text {
+  display: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
 .title-lockup {
   min-width: 0;
 }
@@ -659,6 +665,10 @@ button:focus-visible {
     grid-template-rows: minmax(0, 1fr);
   }
 
+  body.desktop-nav-hidden .reader-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .glass-sidebar {
     position: relative;
     inset: auto;
@@ -672,8 +682,20 @@ button:focus-visible {
     border-bottom: none;
   }
 
-  #menu-toggle,
-  #close-menu,
+  body.desktop-nav-hidden .glass-sidebar {
+    display: none;
+  }
+
+  #menu-toggle {
+    width: auto;
+    padding-inline: 0.9rem 1rem;
+    gap: 0.55rem;
+  }
+
+  .menu-toggle__text {
+    display: inline;
+  }
+
   #overlay {
     display: none !important;
   }
